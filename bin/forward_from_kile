@@ -1,0 +1,9 @@
+#!/usr/bin/perl -w
+
+use strict;
+use warnings;
+
+my(undef,$pdf,$line,$tex) = ($ARGV[0]=~/^(file:)?(.+)#src:(\d+)(.+)$/);
+
+exec '/home/mrks/bin/evince_forward_search', $pdf, $line, $tex;
+
