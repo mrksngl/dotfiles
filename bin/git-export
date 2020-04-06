@@ -1,0 +1,33 @@
+#!/bin/bash
+
+force=0
+arg=""
+if [ "$1" == "-f" ]; then
+	force=1
+	arg=$2
+else
+	arg=$1
+fi
+
+if [ -z "$arg" ]; then
+	echo 'Usage: git export [-f] <target path>'
+	exit 1
+fi
+
+if [ $force -eq 0 ] && [ -e "$arg" ]; then
+	echo 'Target path exists, use -f to override'
+	exit 1
+fi
+
+if [ -e "$arg" ] && ! rm -rf "$arg"; then
+	echo 'Could not remove target path'
+	exit 1
+fi
+
+if ! mkdir "$arg" ; then
+	echo 'Could not create target path'
+	exit 1
+fi
+
+git archive HEAD | tar xC $arg
+

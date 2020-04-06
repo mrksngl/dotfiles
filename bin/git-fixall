@@ -1,0 +1,14 @@
+#!/bin/bash
+
+for i in $(git status --porcelain | grep "^ M" | cut -d' ' -f3); do
+	git commit --fixup=$(git log -n 1 --pretty=format:%H -- $i) -- $i
+done
+
+#git status --porcelain | grep "^R" | while read -r line
+#do
+#	src=$(echo $line | cut -d' ' -f2)
+#	dst=$(echo $line | cut -d' ' -f4)
+#	git commit --fixup=$(git log -n 1 --pretty=format:%H -- $src) -- $src $dst
+#done
+
+
